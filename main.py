@@ -13,12 +13,19 @@ def main(message):
     bot.send_message(message.chat.id, '<b>Help information</b>', parse_mode='html')
 
 
+@bot.message_handler(commands=['dev'])
+def main(message):
+    bot.send_message(message.chat.id, message)
+
+
 @bot.message_handler()
 def info(message):
     if message.text.lower() == 'hi':
         bot.send_message(message.chat.id, f'Hello, {message.from_user.first_name}!')
     elif message.text.lower() == 'hello':
         bot.send_message(message.chat.id, f'Hello, {message.from_user.first_name}!')
+    elif message.text.lower() == 'where am i':
+        bot.reply_to(message, f'I don\'t know :)')
 
 
 bot.polling(none_stop=True)
