@@ -8,4 +8,9 @@ def main(message):
     bot.send_message(message.chat.id, 'Hello!')
 
 
+@bot.message_handler(commands=['help'])
+def main(message):
+    bot.send_message(message.chat.id, 'Help information')
+
+
 bot.polling(none_stop=True)
