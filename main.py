@@ -15,7 +15,7 @@ def flag_info(message):
 
 
 @bot.message_handler(commands=['help'])
-def help(message):
+def help_command(message):
     bot.send_message(message.chat.id, '<b>Help information</b>', parse_mode='html')
 
 
