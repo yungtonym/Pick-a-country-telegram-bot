@@ -5,7 +5,7 @@ bot = telebot.TeleBot('6292095375:AAGQ9S9FtYEomvSbX6XNjgjuakBY9XM9j_s')
 
 
 @bot.message_handler(commands=['start', 'main', 'hello'])
-def main(message):
+def start(message):
     bot.send_message(message.chat.id, f'Hello, {message.from_user.first_name}!')
 
 
@@ -15,12 +15,12 @@ def flag_info(message):
 
 
 @bot.message_handler(commands=['help'])
-def main(message):
+def help(message):
     bot.send_message(message.chat.id, '<b>Help information</b>', parse_mode='html')
 
 
 @bot.message_handler(commands=['dev'])
-def main(message):
+def dev(message):
     bot.send_message(message.chat.id, message)
 
 
