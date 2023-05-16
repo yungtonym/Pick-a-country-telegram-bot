@@ -10,7 +10,7 @@ def main(message):
 
 @bot.message_handler(commands=['help'])
 def main(message):
-    bot.send_message(message.chat.id, 'Help information')
+    bot.send_message(message.chat.id, '<b>Help information</b>', parse_mode='html')
 
 
 bot.polling(none_stop=True)
