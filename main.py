@@ -9,7 +9,7 @@ def start(message):
     bot.send_message(message.chat.id, f'Hello, {message.from_user.first_name}!')
 
 
-@bot.message_handler(commands=['yourFlag'])
+@bot.message_handler(commands=['your_flag'])
 def flag_info(message):
     webbrowser.open('https://www.flagofplanetearth.com/')
 
