@@ -18,7 +18,7 @@ def start(message):
     # bot.register_next_step_handler(message, on_click)
 
 
-@bot.message_handler(content_types='text')
+@bot.message_handler(content_types=['text'])
 def on_click(message):
     if message.text == 'What\'s that flag on bot\'s avatar?':
         webbrowser.open('https://www.flagofplanetearth.com/')
