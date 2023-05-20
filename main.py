@@ -25,9 +25,14 @@ def on_click(message):
     elif message.text == 'Help':
         bot.send_message(message.chat.id, '<b>Help information</b>', parse_mode='html')
     elif message.text == 'Search':
-        bot.send_message(message.chat.id, '<b>Search</b>', parse_mode='html')
+        bot.send_message(message.chat.id, '<b>Enter the name of a country</b>', parse_mode='html')
+        look_for_country(message)
     elif message.text == 'Random country':
         bot.send_message(message.chat.id, '<b>Random country</b>', parse_mode='html')
+
+
+def look_for_country(message):
+    name = message.text.strip().lower()
 
 
 @bot.message_handler(commands=['your_flag'])
