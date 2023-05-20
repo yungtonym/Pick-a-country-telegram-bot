@@ -22,6 +22,12 @@ def start(message):
 def on_click(message):
     if message.text == 'What\'s that flag on bot\'s avatar?':
         webbrowser.open('https://www.flagofplanetearth.com/')
+    elif message.text == 'Help':
+        bot.send_message(message.chat.id, '<b>Help information</b>', parse_mode='html')
+    elif message.text == 'Search':
+        bot.send_message(message.chat.id, '<b>Search</b>', parse_mode='html')
+    elif message.text == 'Random country':
+        bot.send_message(message.chat.id, '<b>Random country</b>', parse_mode='html')
 
 
 @bot.message_handler(commands=['your_flag'])
