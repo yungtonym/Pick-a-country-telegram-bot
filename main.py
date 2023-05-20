@@ -1,12 +1,22 @@
 import telebot
 import webbrowser
+from telebot import types
 
 bot = telebot.TeleBot('6292095375:AAGQ9S9FtYEomvSbX6XNjgjuakBY9XM9j_s')
 
 
 @bot.message_handler(commands=['start', 'main', 'hello'])
 def start(message):
-    bot.send_message(message.chat.id, f'Hello, {message.from_user.first_name}!')
+    markup = types.ReplyKeyboardMarkup()
+    flag_info_button = types.KeyboardButton('What\'s that flag on bot\'s avatar?')
+    markup.row(flag_info_button)
+    bot.send_message(message.chat.id, f'Hello, {message.from_user.first_name}!', reply_markup=markup)
+    bot.register_next_step_handler(message, on_click)
+
+
+def on_click(message):
+    if message.text == 'What\'s that flag on bot\'s avatar?':
+        webbrowser.open('https://www.flagofplanetearth.com/')
 
 
 @bot.message_handler(commands=['your_flag'])
