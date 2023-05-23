@@ -25,7 +25,11 @@ def start(message):
 @bot.message_handler(content_types=['text'])
 def on_click(message):
     if message.text == 'What\'s that flag on bot\'s avatar?':
-        webbrowser.open('https://www.flagofplanetearth.com/')
+        # webbrowser.open('https://www.flagofplanetearth.com/')
+        markup = types.InlineKeyboardMarkup()
+        flag_button = types.InlineKeyboardButton('Link', url='https://www.flagofplanetearth.com/')
+        markup.row(flag_button)
+        bot.reply_to(message, 'Follow this link if you want to know information about this flag', reply_markup=markup)
     elif message.text == 'Help':
         bot.send_message(message.chat.id, '<b>Help information</b>', parse_mode='html')
     elif message.text == 'Search':
