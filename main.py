@@ -1,8 +1,10 @@
 import telebot
 import webbrowser
+import wikipedia
 from telebot import types
 
 bot = telebot.TeleBot('6292095375:AAGQ9S9FtYEomvSbX6XNjgjuakBY9XM9j_s')
+wikipedia.set_lang('en')
 
 
 @bot.message_handler(commands=['start', 'main', 'hello'])
@@ -26,13 +28,26 @@ def on_click(message):
         bot.send_message(message.chat.id, '<b>Help information</b>', parse_mode='html')
     elif message.text == 'Search':
         bot.send_message(message.chat.id, '<b>Enter the name of a country</b>', parse_mode='html')
-        look_for_country(message)
+        bot.register_next_step_handler(message, look_for_country)
     elif message.text == 'Random country':
         bot.send_message(message.chat.id, '<b>Random country</b>', parse_mode='html')
 
 
 def look_for_country(message):
-    name = message.text.strip().lower()
+    try:
+
+        name = message.text
+        page = wikipedia.page(name, auto_suggest=False)
+        # bot.send_message(message.chat.id, page.html)
+        bot.send_message(message.chat.id, page.original_title)
+        # bot.send_message(message.chat.id, page.content)
+        if len(page.content) > 4096:
+            for x in range(0, len(page.content), 4096):
+                bot.send_message(message.chat.id, page.content[x:x + 4096])
+        else:
+            bot.send_message(message.chat.id, page.content)
+    except Exception:
+        bot.send_message(message.chat.id, 'Can\'t find')
 
 
 @bot.message_handler(commands=['your_flag'])
