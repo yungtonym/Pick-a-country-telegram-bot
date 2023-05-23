@@ -10,12 +10,14 @@ wikipedia.set_lang('en')
 @bot.message_handler(commands=['start', 'main', 'hello'])
 def start(message):
     markup = types.ReplyKeyboardMarkup()
+    switch_language_button = types.KeyboardButton('Change wiki language')
     search_button = types.KeyboardButton('Search')
     flag_info_button = types.KeyboardButton('What\'s that flag on bot\'s avatar?')
     help_button = types.KeyboardButton('Help')
     random_country_button = types.KeyboardButton('Random country')
     markup.row(search_button)
     markup.row(help_button, flag_info_button, random_country_button)
+    markup.row(switch_language_button)
     bot.send_message(message.chat.id, f'Hello, {message.from_user.first_name}!', reply_markup=markup)
     # bot.register_next_step_handler(message, on_click)
 
@@ -31,11 +33,26 @@ def on_click(message):
         bot.register_next_step_handler(message, look_for_country)
     elif message.text == 'Random country':
         bot.send_message(message.chat.id, '<b>Random country</b>', parse_mode='html')
+    elif message.text == 'Change wiki language':
+        markup = types.InlineKeyboardMarkup()
+        en_button = types.InlineKeyboardButton('English', callback_data='en')
+        ru_button = types.InlineKeyboardButton('Russian', callback_data='ru')
+        markup.row(en_button, ru_button)
+        bot.reply_to(message, 'Choose the language', reply_markup=markup)
+
+
+@bot.callback_query_handler(func=lambda callback: True)
+def callback_lang(callback):
+    if callback.data == 'en':
+        wikipedia.set_lang('en')
+        bot.send_message(callback.message.chat.id, '<b>Wikipedia language switched to English</b>', parse_mode='html')
+    elif callback.data == 'ru':
+        wikipedia.set_lang('ru')
+        bot.send_message(callback.message.chat.id, '<b>Wikipedia language switched to Russian</b>', parse_mode='html')
 
 
 def look_for_country(message):
     try:
-
         name = message.text
         page = wikipedia.page(name, auto_suggest=False)
         # bot.send_message(message.chat.id, page.html)
